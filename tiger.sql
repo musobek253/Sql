@@ -9,15 +9,12 @@ CREATE OR REPLACE FUNCTION log_changes()
     RETURNS TRIGGER AS $$
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        -- Insert a new row into the log table when an insert occurs
         INSERT INTO Log (table_name, action, changed_at)
         VALUES (TG_TABLE_NAME, 'INSERT', NOW());
     ELSIF TG_OP = 'UPDATE' THEN
-        -- Insert a new row into the log table when an update occurs
         INSERT INTO Log (table_name, action, changed_at)
         VALUES (TG_TABLE_NAME, 'UPDATE', NOW());
     ELSIF TG_OP = 'DELETE' THEN
-        -- Insert a new row into the log table when a delete occurs
         INSERT INTO Log (table_name, action, changed_at)
         VALUES (TG_TABLE_NAME, 'DELETE', NOW());
     END IF;
